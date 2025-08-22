@@ -1,0 +1,13 @@
+### Criar cliente metodo POST
+POST http://localhost/DVL_ATV/api_noite.php
+
+
+{
+    "nome": "João Victor",
+    "email": "joao.tor@example.com",
+    "senha": "Senha@123",
+    "telefone": "11987654321",
+    "endereco": "Rua A, 123",
+    "estado": "SP",
+    "data_nascimento": "1990-01-01"
+}

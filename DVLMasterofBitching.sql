@@ -1,0 +1,15 @@
+CREATE DATABASE IF NOT EXISTS sistema_api;
+USE sistema_api;
+
+CREATE TABLE api_usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    uuid CHAR(36) NOT NULL UNIQUE,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE, 
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(200) NOT NULL,
+    endereco VARCHAR(100) NOT NULL,
+    estado CHAR(2) NOT NULL,
+    data_nascimento DATE NOT NULL, 
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
