@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-require_once "db.php";
+require_once __DIR__ . "/db.php";
 
 $method = $_SERVER["REQUEST_METHOD"];
 
@@ -22,7 +22,7 @@ if (empty($data["email"]) || empty($data["senha"])) {
     exit();
 }
 
-$email = $conn->real_escape_string($data["email"]);
+$email = strtolower(trim($conn->real_escape_string($data["email"])));
 $senha = $data["senha"];
 
 $stmt = $conn->prepare("SELECT id, uuid, nome, email, senha, telefone, endereco, estado, data_nascimento, criado_em FROM api_usuarios WHERE email = ?");
@@ -53,4 +53,3 @@ echo json_encode([
 
 $stmt->close();
 $conn->close();
-?>

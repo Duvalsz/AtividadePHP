@@ -1,23 +1,18 @@
-# 📌 API - Sistema de Usuários
+# 📌 API de Usuários - sistema_api
 
-API REST para cadastro, login e gerenciamento de usuários.  
-Todas as respostas são no formato *JSON*.
+## Endpoints
 
----
+### Criar Usuário
+**POST** `/api_noite.php`
 
-## 🔑 Endpoints
-
-### 1. Criar Usuário
-*POST* /api_noite.php
-
-#### Exemplo de requisição
+- **Body (JSON):**
 ```json
 {
-  "nome": "João Victor",
-  "email": "joao@example.com",
+  "nome": "Maria Silva",
+  "email": "maria.silva@example.com",
   "senha": "Senha@123",
   "telefone": "11987654321",
-  "endereco": "Rua A, 123",
-  "estado": "SP",
-  "data_nascimento": "1990-01-01"
+  "endereco": "Rua das Flores, 456",
+  "estado": "RJ",
+  "data_nascimento": "1995-05-10"
 }

@@ -1,30 +1,16 @@
-### Criar cliente metodo POST
+### Criar cliente (POST)
 POST http://localhost/DVL_ATV/api_noite.php
 Content-Type: application/json
 
 {
-    "nome": "João Victor",
-    "email": "joa21tor@example.com",
+    "nome": "Maria Silva",
+    "email": "maria.silv0a@example.com",
     "senha": "Senha@123",
     "telefone": "11987654321",
-    "endereco": "Rua A, 123",
-    "estado": "SP",
-    "data_nascimento": "1990-01-01"
+    "endereco": "Rua das Flores, 456",
+    "estado": "RJ",
+    "data_nascimento": "1995-05-10"
 }
 
-### Login usuario
-POST http://localhost/DVL_ATV/login.php
-Content-Type: application/json
-
-{
-    "email": "joa21tor@example.com",
-    "senha": "Senha@123"
-}
-
-### Deletar usuario por UUID
-DELETE http://localhost/DVL_ATV/delete.php
-Content-Type: application/json
-
-{
-    "uuid": "7e3c2d6e-82a5-4b6a-b48f-2345a1a4c998"
-}
+### Deletar cliente (DELETE)
+DELETE http://localhost/DVL_ATV/api_noite.php?uuid=COLE-O-UUID-AQUI
