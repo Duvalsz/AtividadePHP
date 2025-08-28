@@ -18,26 +18,44 @@ if ($method === "POST") {
     $data_nascimento = $dados["data_nascimento"] ?? null;
 
     if (!$nome || !$email || !$senha || !$telefone || !$endereco || !$estado || !$data_nascimento) {
+        http_response_code(400);
         echo json_encode(["erro" => "Todos os campos são obrigatórios."]);
         exit();
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
         echo json_encode(["erro" => "Formato de e-mail inválido."]);
         exit();
     }
 
     $validacaoSenha = validarSenha($senha);
     if ($validacaoSenha !== true) {
+        http_response_code(400);
         echo json_encode(["erro" => $validacaoSenha]);
         exit();
     }
 
     if (!validarTelefone($telefone)) {
+        http_response_code(400);
         echo json_encode(["erro" => "Telefone deve conter apenas números (10 ou 11 dígitos)."]);
         exit();
     }
 
+    // 🔹 Verificar duplicidade de e-mail
+    $checkEmail = $conn->prepare("SELECT id FROM api_usuarios WHERE email = ?");
+    $checkEmail->bind_param("s", $email);
+    $checkEmail->execute();
+    $checkEmail->store_result();
+
+    if ($checkEmail->num_rows > 0) {
+        http_response_code(409);
+        echo json_encode(["erro" => "E-mail já cadastrado."], JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+    $checkEmail->close();
+
+    // Hash da senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
     $uuid = gerarUuid();
 
@@ -47,14 +65,17 @@ if ($method === "POST") {
     $stmt->bind_param("ssssssss", $uuid, $nome, $email, $senhaHash, $telefone, $endereco, $estado, $data_nascimento);
 
     if ($stmt->execute()) {
+        http_response_code(201);
         echo json_encode(["sucesso" => "Usuário criado com sucesso!", "uuid" => $uuid]);
     } else {
+        http_response_code(500);
         echo json_encode(["erro" => "Erro ao criar usuário: " . $conn->error]);
     }
 }
 
 elseif ($method === "DELETE") {
     if (!isset($_GET["uuid"])) {
+        http_response_code(400);
         echo json_encode(["erro" => "UUID é obrigatório para excluir."]);
         exit();
     }
@@ -68,9 +89,11 @@ elseif ($method === "DELETE") {
         if ($stmt->affected_rows > 0) {
             echo json_encode(["sucesso" => "Usuário excluído com sucesso."]);
         } else {
+            http_response_code(404);
             echo json_encode(["erro" => "Usuário não encontrado."]);
         }
     } else {
+        http_response_code(500);
         echo json_encode(["erro" => "Erro ao excluir: " . $conn->error]);
     }
 }
