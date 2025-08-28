@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = ""; // Banco de dados desse pc n possui senha
+$pass = "aluno"; // Banco de dados desse pc n possui senha
 $db   = "sistema_api";
 
 $conn = new mysqli($host, $user, $pass, $db);
